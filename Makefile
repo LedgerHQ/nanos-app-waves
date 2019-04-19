@@ -24,17 +24,21 @@ include $(BOLOS_SDK)/Makefile.defines
 
 APPVERSION_M=1
 APPVERSION_N=0
-APPVERSION_P=0
+APPVERSION_P=1
 
 APPNAME = "Waves"
 APPVERSION = $(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 ifeq ($(TARGET_NAME),TARGET_BLUE)
 ICONNAME = blue_app_waves.gif
 else
-ICONNAME = nanos_app_waves.gif
+	ifeq ($(TARGET_NAME),TARGET_NANOX)
+ICONNAME=nanox_app_$(COIN).gif
+	else
+ICONNAME=nanos_app_$(COIN).gif
+	endif
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x40 --path "44'/5741564'" --curve secp256k1 --curve ed25519 $(COMMON_LOAD_PARAMS)
+APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/5741564'" --curve secp256k1 --curve ed25519 $(COMMON_LOAD_PARAMS)
 
 # Build configuration
 
@@ -63,6 +67,23 @@ DEFINES   += USB_SEGMENT_SIZE=64
 DEFINES   += UNUSED\(x\)=\(void\)x
 DEFINES   += APPVERSION=\"$(APPVERSION)\"
 DEFINES   += MAX_DATA_SIZE=650
+
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+DEFINES       += HAVE_BLE BLE_COMMAND_TIMEOUT_MS=2000
+DEFINES       += HAVE_BLE_APDU # basic ledger apdu transport over BLE
+
+DEFINES       += HAVE_GLO096
+DEFINES       += HAVE_BAGL BAGL_WIDTH=128 BAGL_HEIGHT=64
+DEFINES       += HAVE_BAGL_ELLIPSIS # long label truncation feature
+DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_REGULAR_11PX
+DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_EXTRABOLD_11PX
+DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_LIGHT_16PX
+endif
+
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+SDK_SOURCE_PATH  += lib_blewbxx lib_blewbxx_impl
+SDK_SOURCE_PATH  += lib_ux
+endif
 
 # Compiler, assembler, and linker
 

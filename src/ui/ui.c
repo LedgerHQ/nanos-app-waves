@@ -33,6 +33,12 @@
 #include "blue/ui_menus_blue_prepro.h"
 #endif
 
+#ifdef TARGET_NANOX
+#include "nanox/ui_menus_nanox.h"
+#include "nanox/ui_menus_buttons.h"
+#include "nanox/ui_menus_prepro.h"
+#endif
+
 ux_state_t ux;
 
 // UI currently displayed
@@ -49,6 +55,9 @@ void menu_address_init() {
         UX_DISPLAY(ui_address_blue, ui_address_blue_prepro);
     #elif defined(TARGET_NANOS)
         UX_DISPLAY(ui_address_nanos, ui_address_prepro);
+    #elif defined(TARGET_NANOX)
+        // UX_DISPLAY(ui_address_nanos, ui_address_prepro);
+        ux_flow_init(0, ux_display_address_flow, NULL);
     #endif // #if TARGET_ID
 }
 
@@ -60,6 +69,9 @@ void ui_idle() {
         UX_DISPLAY(ui_idle_blue, ui_idle_blue_prepro);
     #elif defined(TARGET_NANOS)
         UX_MENU_DISPLAY(0, menu_main, NULL);
+    #elif defined(TARGET_NANOX)
+        ux_flow_init(0, ux_display_address_flow, NULL);
+//        UX_MENU_DISPLAY(0, menu_main, NULL);
     #endif // #if TARGET_ID
 }
 
@@ -168,6 +180,9 @@ void menu_sign_init() {
             UX_DISPLAY(ui_verify_transfer_blue, NULL);
         #elif defined(TARGET_NANOS)
             UX_DISPLAY(ui_verify_transfer_nanos, ui_verify_transfer_prepro);
+        #elif defined(TARGET_NANOX)
+            ux_flow_init(0, ux_display_address_flow, NULL);
+//            UX_DISPLAY(ui_verify_transfer_nanos, ui_verify_transfer_prepro);
         #endif // #if TARGET_ID
         return;
     } else {
@@ -239,6 +254,9 @@ void menu_sign_init() {
         UX_DISPLAY(ui_approval_blue, ui_approval_blue_prepro);
     #elif defined(TARGET_NANOS)
         UX_DISPLAY(ui_verify_transaction_nanos, ui_verify_transaction_prepro);
+    #elif defined(TARGET_NANOX)
+        ux_flow_init(0, ux_display_address_flow, NULL);
+//        UX_DISPLAY(ui_verify_transaction_nanos, ui_verify_transaction_prepro);
     #endif // #if TARGET_ID
 }
 

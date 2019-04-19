@@ -35,13 +35,13 @@ tmpContext_t tmp_ctx;
 uiContext_t ui_context;
 
 // Non-volatile storage for the wallet app's stuff
-WIDE internal_storage_t N_storage_real;
+WIDE internal_storage_t const N_storage_real;
 
 // SPI Buffer for io_event
 unsigned char G_io_seproxyhal_spi_buffer[IO_SEPROXYHAL_BUFFER_SIZE_B];
 
-#if !defined(TARGET_NANOS) && !defined(TARGET_BLUE)
-#error This application only supports the Ledger Nano S and the Ledger Blue
+#if !defined(TARGET_NANOS) && !defined(TARGET_BLUE) && !defined(TARGET_NANOX)
+#error This application only supports the Ledger Nano S, Nano X and the Ledger Blue
 #endif
 
 unsigned short io_exchange_al(unsigned char channel, unsigned short tx_len) {
@@ -408,6 +408,11 @@ __attribute__((section(".boot"))) int main(void) {
 
         UX_INIT();
 
+        #ifdef TARGET_NANOX
+                // grab the current plane mode setting
+                G_io_app.plane_mode = os_setting_get(OS_SETTING_PLANEMODE, NULL, 0);
+        #endif // TARGET_NANOX
+
         BEGIN_TRY {
             TRY {
                 io_seproxyhal_init();
@@ -422,6 +427,11 @@ __attribute__((section(".boot"))) int main(void) {
 
                 USB_power(0);
                 USB_power(1);
+
+                #ifdef HAVE_BLE
+                    BLE_power(0, NULL);
+                    BLE_power(1, "Nano X");
+                #endif // HAVE_BLE
 
                 // set menu bar colour for blue
 #if defined(TARGET_BLUE)
