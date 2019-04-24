@@ -1,5 +1,5 @@
-#ifndef __UI_MENUS_NANOS_H__
-#define __UI_MENUS_NANOS_H__
+#ifndef __UI_MENUS_NANOX_H__
+#define __UI_MENUS_NANOX_H__
 
 #include "os.h"
 #include "cx.h"
@@ -151,3 +151,5 @@ const ux_flow_step_t *        const ux_approval_flow_11 [] = {
   &ux_approval_8_step,
   FLOW_END_STEP,
 };
+
+#endif

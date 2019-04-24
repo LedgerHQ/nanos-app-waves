@@ -1,5 +1,5 @@
-#ifndef __UI_MENUS_PREPRO_H__
-#define __UI_MENUS_PREPRO_H__
+#ifndef __UI_MENUS_PREPRO_H__X
+#define __UI_MENUS_PREPRO_H__X
 
 #include "os_io_seproxyhal.h"
 

@@ -1,5 +1,5 @@
-#ifndef __UI_MENUS_BUTTONS_H__
-#define __UI_MENUS_BUTTONS_H__
+#ifndef __UI_MENUS_BUTTONS_H__X
+#define __UI_MENUS_BUTTONS_H__X
 
 #include "os.h"
 #include "cx.h"
