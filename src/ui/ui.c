@@ -192,34 +192,7 @@ void menu_sign_init() {
         #endif // #if TARGET_ID
         return;
     } else {
-        os_memmove(&ui_context.line2, &"Transaction Id\0", 15);
-        if (tx_type == 3) {
-            os_memmove(&ui_context.line1, &"issue\0", 6);
-        } else if (tx_type == 4) {
-            os_memmove(&ui_context.line1, &"transfer\0", 9);
-        } else if (tx_type == 5) {
-            os_memmove(&ui_context.line1, &"reissue\0", 8);
-        } else if (tx_type == 6) {
-            os_memmove(&ui_context.line1, &"burn\0", 5);
-        } else if (tx_type == 8) {
-            os_memmove(&ui_context.line1, &"start leasing\0", 14);
-        } else if (tx_type == 9) {
-            os_memmove(&ui_context.line1, &"cancel leasing\0", 15);
-        } else if (tx_type == 10) {
-            os_memmove(&ui_context.line1, &"creating an alias\0", 18);
-        } else if (tx_type == 11) {
-            os_memmove(&ui_context.line1, &"mass transfer\0", 14);
-        } else if (tx_type == 12) {
-            os_memmove(&ui_context.line1, &"data\0", 5);
-        } else if (tx_type == 13) {
-            os_memmove(&ui_context.line1, &"set script\0", 11);
-        } else if (tx_type == 14) {
-            os_memmove(&ui_context.line1, &"sponsorship\0", 12);
-        } else if (tx_type == 15) {
-            os_memmove(&ui_context.line1, &"asset script\0", 13);
-        } else if (tx_type == 16) {
-            os_memmove(&ui_context.line1, &"script invocation\0", 18);
-        } else {
+        if (tx_type > 200) {
             // type byte >200 are 'reserved', it will not be signed
             os_memmove(&ui_context.line2, &"Hash\0", 5);
             if (tx_type == 252) {
@@ -230,6 +203,38 @@ void menu_sign_init() {
                 os_memmove(&ui_context.line1, &"request\0", 8);
             } else if (tx_type == 255) {
                 os_memmove(&ui_context.line1, &"message\0", 8);
+            } else {
+                os_memmove(&ui_context.line1, &"something\0", 10);
+            }
+        } else if (tx_type == 10) {
+            os_memmove(&ui_context.line2, &"Transaction Hash\0", 17);
+            os_memmove(&ui_context.line1, &"creating an alias\0", 18);
+        } else {
+            os_memmove(&ui_context.line2, &"Transaction Id\0", 15);
+            if (tx_type == 3) {
+                os_memmove(&ui_context.line1, &"issue\0", 6);
+            } else if (tx_type == 4) {
+                os_memmove(&ui_context.line1, &"transfer\0", 9);
+            } else if (tx_type == 5) {
+                os_memmove(&ui_context.line1, &"reissue\0", 8);
+            } else if (tx_type == 6) {
+                os_memmove(&ui_context.line1, &"burn\0", 5);
+            } else if (tx_type == 8) {
+                os_memmove(&ui_context.line1, &"start leasing\0", 14);
+            } else if (tx_type == 9) {
+                os_memmove(&ui_context.line1, &"cancel leasing\0", 15);
+            } else if (tx_type == 11) {
+                os_memmove(&ui_context.line1, &"mass transfer\0", 14);
+            } else if (tx_type == 12) {
+                os_memmove(&ui_context.line1, &"data\0", 5);
+            } else if (tx_type == 13) {
+                os_memmove(&ui_context.line1, &"set script\0", 11);
+            } else if (tx_type == 14) {
+                os_memmove(&ui_context.line1, &"sponsorship\0", 12);
+            } else if (tx_type == 15) {
+                os_memmove(&ui_context.line1, &"asset script\0", 13);
+            } else if (tx_type == 16) {
+                os_memmove(&ui_context.line1, &"script invocation\0", 18);
             }
         }
     }
