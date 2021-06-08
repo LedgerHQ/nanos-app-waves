@@ -27,6 +27,7 @@
 #include "../main.h"
 #include "../crypto/ledger_crypto.h"
 #include "os_io_seproxyhal.h"
+#include "ux.h"
 
 #ifdef HAVE_BOLOS_UX
 extern ux_state_t G_ux;
